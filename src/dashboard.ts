@@ -33,10 +33,20 @@ function formatDuration(job: RemediationJob): string {
   return `${seconds}s`;
 }
 
+function sessionInfo(job: RemediationJob): string {
+  if (!job.devinSessionId) return `<span style="color:#6b7280">—</span>`;
+  const shortId = job.devinSessionId.substring(0, 8);
+  const statusIcon = job.status === "in_progress"
+    ? `<span style="display:inline-block;width:6px;height:6px;background:#3b82f6;border-radius:50%;animation:pulse 2s infinite;margin-right:6px"></span>`
+    : job.status === "pr_created" || job.status === "completed"
+    ? `<span style="display:inline-block;width:6px;height:6px;background:#10b981;border-radius:50%;margin-right:6px"></span>`
+    : job.status === "failed"
+    ? `<span style="display:inline-block;width:6px;height:6px;background:#ef4444;border-radius:50%;margin-right:6px"></span>`
+    : `<span style="display:inline-block;width:6px;height:6px;background:#6b7280;border-radius:50%;margin-right:6px"></span>`;
+  return `<span style="display:inline-flex;align-items:center">${statusIcon}<code style="color:#93c5fd;font-size:11px;background:#1e3a5f;padding:2px 6px;border-radius:4px">${shortId}...</code></span>`;
+}
+
 function jobRow(job: RemediationJob): string {
-  const sessionLink = job.devinSessionUrl
-    ? `<a href="${job.devinSessionUrl}" target="_blank" style="color:#60a5fa">View Session</a>`
-    : "—";
   const prLink = job.prUrl
     ? `<a href="${job.prUrl}" target="_blank" style="color:#34d399">View PR</a>`
     : "—";
@@ -48,7 +58,7 @@ function jobRow(job: RemediationJob): string {
       <td style="padding:12px">${severityBadge(job.severity)}</td>
       <td style="padding:12px"><code style="color:#d1d5db;font-size:12px">${job.ruleId}</code></td>
       <td style="padding:12px">${statusBadge(job.status)}</td>
-      <td style="padding:12px">${sessionLink}</td>
+      <td style="padding:12px">${sessionInfo(job)}</td>
       <td style="padding:12px">${prLink}</td>
       <td style="padding:12px;color:#9ca3af">${formatDuration(job)}</td>
     </tr>
@@ -222,7 +232,7 @@ export function renderDashboard(
               <th style="padding:12px;color:#9ca3af;font-size:12px;text-transform:uppercase">Severity</th>
               <th style="padding:12px;color:#9ca3af;font-size:12px;text-transform:uppercase">Rule</th>
               <th style="padding:12px;color:#9ca3af;font-size:12px;text-transform:uppercase">Status</th>
-              <th style="padding:12px;color:#9ca3af;font-size:12px;text-transform:uppercase">Devin</th>
+              <th style="padding:12px;color:#9ca3af;font-size:12px;text-transform:uppercase">Devin Session</th>
               <th style="padding:12px;color:#9ca3af;font-size:12px;text-transform:uppercase">PR</th>
               <th style="padding:12px;color:#9ca3af;font-size:12px;text-transform:uppercase">Duration</th>
             </tr>
