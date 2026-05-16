@@ -2,7 +2,7 @@ import { DevinSessionResponse } from "./types";
 
 interface CreateSessionOptions {
   prompt: string;
-  playookId?: string;
+  playbookId?: string;
   tags?: string[];
   repos?: string[];
   maxAcuLimit?: number;
@@ -77,8 +77,8 @@ export class DevinClient {
       prompt: options.prompt,
     };
 
-    if (options.playookId) {
-      body.playbook_id = options.playookId;
+    if (options.playbookId) {
+      body.playbook_id = options.playbookId;
     }
     if (options.tags) {
       body.tags = options.tags;

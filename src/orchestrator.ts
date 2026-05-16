@@ -122,7 +122,7 @@ export class Orchestrator {
         tags: string[];
         repos: string[];
         maxAcuLimit: number;
-        playookId?: string;
+        playbookId?: string;
       } = {
         prompt,
         tags: [
@@ -134,8 +134,8 @@ export class Orchestrator {
         maxAcuLimit: 10,
       };
 
-      if (this.config.playookId) {
-        sessionOptions.playookId = this.config.playookId;
+      if (this.config.playbookId) {
+        sessionOptions.playbookId = this.config.playbookId;
       }
 
       const session = await this.devin.createSession(sessionOptions);

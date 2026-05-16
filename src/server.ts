@@ -2,24 +2,20 @@ import express from "express";
 import { loadConfig } from "./config";
 import { Orchestrator } from "./orchestrator";
 import { renderDashboard } from "./dashboard";
+import { GitHubClient } from "./github";
 
 const config = loadConfig();
 const orchestrator = new Orchestrator(config);
 const app = express();
 
-app.use(express.json());
-
-// Store raw body for webhook signature verification
-app.use("/webhook", (req, _res, next) => {
-  let rawBody = "";
-  req.on("data", (chunk: Buffer) => {
-    rawBody += chunk.toString();
-  });
-  req.on("end", () => {
-    (req as express.Request & { rawBody: string }).rawBody = rawBody;
-    next();
-  });
-});
+// Parse JSON and capture raw body for webhook signature verification
+app.use(
+  express.json({
+    verify: (req, _res, buf) => {
+      (req as express.Request & { rawBody: Buffer }).rawBody = buf;
+    },
+  })
+);
 
 // Health check
 app.get("/health", (_req, res) => {
@@ -61,12 +57,11 @@ app.post("/webhook", (req, res) => {
 
   // Verify signature if secret is configured
   if (config.githubWebhookSecret && signature) {
-    const rawBody = (req as express.Request & { rawBody: string }).rawBody;
-    const { GitHubClient } = require("./github");
+    const rawBody = (req as express.Request & { rawBody: Buffer }).rawBody;
     const ghClient = new GitHubClient(config.githubToken);
     if (
       !ghClient.verifyWebhookSignature(
-        rawBody,
+        rawBody.toString(),
         signature,
         config.githubWebhookSecret
       )

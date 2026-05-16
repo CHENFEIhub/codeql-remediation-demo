@@ -104,5 +104,5 @@ export interface AppConfig {
   slackWebhookUrl: string;
   targetRepo: string;
   maxConcurrentSessions: number;
-  playookId: string;
+  playbookId: string;
 }

@@ -26,6 +26,6 @@ export function loadConfig(): AppConfig {
       optionalEnv("MAX_CONCURRENT_SESSIONS", "3"),
       10
     ),
-    playookId: optionalEnv("PLAYBOOK_ID", ""),
+    playbookId: optionalEnv("PLAYBOOK_ID", ""),
   };
 }
