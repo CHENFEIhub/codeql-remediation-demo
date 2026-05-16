@@ -80,7 +80,7 @@ The server starts on `http://localhost:3000`.
 | `GET /dashboard` | GET | HTML dashboard with real-time metrics |
 | `GET /api/status` | GET | JSON metrics (total, in-progress, success rate, etc.) |
 | `GET /api/jobs` | GET | List all remediation jobs |
-| `GET /api/jobs/:repo/:issueNumber` | GET | Get a specific job |
+| `GET /api/jobs/:owner/:name/:issueNumber` | GET | Get a specific job |
 | `POST /webhook` | POST | GitHub webhook endpoint (issue events) |
 | `POST /trigger` | POST | Manually trigger remediation for a specific issue |
 | `POST /scan` | POST | Batch remediation for all open vulnerability issues |
