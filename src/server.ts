@@ -38,9 +38,9 @@ app.get("/api/jobs", (_req, res) => {
   res.json(orchestrator.getAllJobs());
 });
 
-// API: Get specific job
-app.get("/api/jobs/:repo/:issueNumber", (req, res) => {
-  const repo = req.params.repo;
+// API: Get specific job (repo is owner/name format)
+app.get("/api/jobs/:owner/:name/:issueNumber", (req, res) => {
+  const repo = `${req.params.owner}/${req.params.name}`;
   const issueNumber = parseInt(req.params.issueNumber, 10);
   const job = orchestrator.getJob(repo, issueNumber);
   if (!job) {
