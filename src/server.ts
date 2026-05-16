@@ -25,7 +25,7 @@ app.get("/health", (_req, res) => {
 // Dashboard (HTML)
 app.get("/dashboard", (_req, res) => {
   const metrics = orchestrator.getMetrics();
-  res.type("html").send(renderDashboard(metrics));
+  res.type("html").send(renderDashboard(metrics, config.targetRepo));
 });
 
 // API: Get metrics (JSON)
