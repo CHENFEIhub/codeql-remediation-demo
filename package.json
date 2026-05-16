@@ -1,0 +1,25 @@
+{
+  "name": "codeql-remediation-demo",
+  "version": "1.0.0",
+  "description": "Event-driven CodeQL auto-remediation using Devin AI",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx src/server.ts",
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["codeql", "security", "devin", "automation"],
+  "author": "CHENFEIhub",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.8.0",
+    "tsx": "^4.22.0",
+    "typescript": "^6.0.3"
+  }
+}
